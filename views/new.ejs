@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+<div class="container ">
+<h1>Create new dish</h1>
+    <form action="/dishes" method="POST" style="width: 40%;">
+        <div class="form-group">
+            <input class="form-control my-3" type="text "name="name" placeholder="name">
+            <input class="form-control my-3" type="text "name="image" placeholder="image">
+            <button class="btn btn-primary">Submit</button>
+
+        </div>
+    </form>
+<p><a href="/dishes">GO BACK</a></p>
+</div>
+
+<%- include('partials/footer') %>
