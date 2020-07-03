@@ -1,20 +1,21 @@
+// const seeddb = require('./seeds.js')
+
 var express = require('express'),
      app = express(),
      bodyParser =require('body-parser'),
-     mongoose = require('mongoose')
+     mongoose = require('mongoose'),
+     Dish = require('../models/dish.js'),
+     Comments = require('../models/comments'),
+     Posts = require('../models/dish.js'),
+    seeddb = require('./seeds.js')
+
+seeddb();
 
 // mongoose.connect(process.env.MONGO_URL)
 mongoose.connect("mongodb://127.0.0.1:27017/cookDiairies-api",{ useNewUrlParser: true , useUnifiedTopology: true  })
 app.use(bodyParser.urlencoded({exdended:true}));
 app.set('view engine' , 'ejs');
 
-var dishSchema = new mongoose.Schema({
-    name:String,
-    image:String,
-    desc:String
-})
-
-var Dish = mongoose.model("Dish" , dishSchema)
 
 // Dish.create({
 //     name: "Pasta" ,
@@ -66,7 +67,7 @@ app.get('/dishes/new' , (req,res)=>{
     res.render('new')
 })
 app.get('/dishes/:id' , (req,res)=>{
-Dish.findById(req.params.id , (er , found)=>{
+Dish.findById(req.params.id).populate('comments').exec( (er , found)=>{
     if(er){
         console.log(er);
     }else{
@@ -75,6 +76,36 @@ Dish.findById(req.params.id , (er , found)=>{
 })
     
 })
+
+app.get('/dishes/:id/comments/new',(req,res)=>{
+    Dish.findById(req.params.id,(err , dish)=>{
+        if(err){console.log(err)}
+        else{
+            console.log(dish)
+            res.render('new-comment' , {dish:dish})
+        }
+    })
+    
+})
+app.post('/dishes/:id/comments',(req,res)=>{
+    Dish.findById(req.params.if,(err , dish)=>{
+        if(err){console.log(err);redirect('/dishes')}
+        else{
+            Comments.create(req.body.comment , (err,cmnt)=>{
+                if(err){console.log(err)}
+                else{
+                   dish.Comments.push(cmnt) 
+                   dish.save()
+                   res.redirect('/dishes' + dish._id)
+                }
+            })
+            
+        }
+    })
+    
+})
+
+
 app.listen(3000 || process.env.PORT , ()=>{
     console.log('Serving Now..')
 })

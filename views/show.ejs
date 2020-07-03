@@ -3,3 +3,9 @@
 <img src="<%= dish.image%>" alt="">
 
 <%= dish.desc%>
+<% dish.comments.forEach((cmnt)=>{%>
+    <strong><p><%- cmnt.author%> - <%- cmnt.text%></p></strong>
+    <p>
+        <a href="/dishes/<%-dish._id%>/comments/new"> Add new Comment </a>
+    </p>
+<%})%>
