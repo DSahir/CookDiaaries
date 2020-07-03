@@ -30,9 +30,13 @@
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
-            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit">Login</button>
-            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit">Sign Up</button>
-            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit">Logout</button>
+            <% if(!currentUser){ %>
+            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit" href="/login">Login</button>
+            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit" href="/register">Sign Up</button>
+            <%}else{%>
+              <li>Signes in as <%currentUser.username%></li>
+            <button class="btn btn-primary my-2 my-sm-0 mx-2" type="submit" href="/logout">Logout</button>
+              <%}%>
           </form>
         </div>
       </nav>

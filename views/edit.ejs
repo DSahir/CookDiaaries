@@ -1,0 +1,17 @@
+<h1>Edit form</h1>
+<%- include('partials/header') %>
+<div class="container ">
+<h1>Edit dish</h1>
+    <form action="/dishes/<%=dish._id%>/?_method=PUT" method="POST" style="width: 40%;">
+        <div class="form-group">
+            <input class="form-control my-3" type="text "name="dish[name]"  value="<%= dish.name %>">
+            <input class="form-control my-3" type="text "name="dish[image]" value="<%= dish.image %>">
+            <input class="form-control my-3" type="text "name="dish[desc]"  value="<%= dish.desc %>">
+            <button class="btn btn-primary">Submit</button>
+
+        </div>
+    </form>
+<p><a href="/dishes">GO BACK</a></p>
+</div>
+
+<%- include('partials/footer') %>

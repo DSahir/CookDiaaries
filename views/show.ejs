@@ -3,9 +3,21 @@
 <img src="<%= dish.image%>" alt="">
 
 <%= dish.desc%>
+<p>
+<%=dish.author.username%>
+</p>
+<%if(currentUser && dish.author.id.equals(currentUser._id)){%>
+
+
+<button href="/dishes/<%=dish.id%>/edit">Edit</button>
+<form action="/dishes/<%-dishes%>?_method=DELETE" method="post">
+    <button>Delete</button>
+</form>
+<%}%>
 <% dish.comments.forEach((cmnt)=>{%>
-    <strong><p><%- cmnt.author%> - <%- cmnt.text%></p></strong>
+    <strong><p><%- cmnt.author.username%> - <%- cmnt.text%></p></strong>
     <p>
         <a href="/dishes/<%-dish._id%>/comments/new"> Add new Comment </a>
     </p>
+ 
 <%})%>
