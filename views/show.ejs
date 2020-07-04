@@ -1,23 +1,46 @@
-<h1>Show templ</h1>
-<%= dish.name%>
-<img src="<%= dish.image%>" alt="">
 
+<%- include('partials/header') %>
+
+<h1>Show templ</h1>
+<h2><%= dish.name%></h2><br>
+<img src="<%= dish.image%>" alt="">
+<br>
 <%= dish.desc%>
 <p>
 <%=dish.author.username%>
 </p>
 <%if(currentUser && dish.author.id.equals(currentUser._id)){%>
 
+<!-- <button href="/dishes/<%-dish._id%>/edit"> Edit</button> -->
+<form action="/dishes/<%-dish._id%>/edit" method="GET">
+    <button>Edit</button>
+</form>
 
-<button href="/dishes/<%=dish.id%>/edit">Edit</button>
-<form action="/dishes/<%-dishes%>?_method=DELETE" method="post">
+<form action="/dishes/<%-dish._id%>?_method=DELETE" method="post">
     <button>Delete</button>
 </form>
 <%}%>
-<% dish.comments.forEach((cmnt)=>{%>
-    <strong><p><%- cmnt.author.username%> - <%- cmnt.text%></p></strong>
-    <p>
+<p>
+    <form action="/dishes/<%-dish._id%>/comments/new" method="GET">
+        <button>Add comment</button>
+    </form>
+</p>
+
+<% dish.comments.forEach((cmnt)=>{ %>
+    
+    <strong><p><%- cmnt.author.username %> - <%- cmnt.text%></p></strong>
+    
+
+    <% if(currentUser && cmnt.author.code.equals(currentUser.id)){ %> 
+
+    <!-- <a href="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>/edit">Edit</a> -->
+    <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>/edit" method="GET">
+        <button type="submit">Edit</button>
+    </form>
+    <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>?_method=DELETE" method="POST">
+        <button type="submit">delete</button>
+    </form>
+    <%}%>    <p>
         <a href="/dishes/<%-dish._id%>/comments/new"> Add new Comment </a>
-    </p>
- 
-<%})%>
+    </p>     
+ <%})%>

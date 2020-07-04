@@ -1,13 +1,14 @@
 var mongoose = require('mongoose')
+var User =require('../models/users')
 
 var CmntSchema = mongoose.Schema({
     text:String,
     author:{
-        id:{
+        code:{
             type: mongoose.Schema.Types.ObjectId,
             ref:'User'
         },
-        username:String
+    username: String
     }
 })
 

@@ -4,12 +4,13 @@
     <form action="/dishes/<%= dish._id%>/comments" method="POST" style="width: 40%;">
         <div class="form-group">
             <input class="form-control my-3" type="text "name="comment[text]" placeholder="text ">
-            <input class="form-control my-3" type="text "name="comment[author]" placeholder="author">
+            <!-- <input class="form-control my-3" type="text "name="comment[author]" placeholder="author"> -->
             <button class="btn btn-primary">Submit</button>
 
         </div>
     </form>
 <p><a href="/dishes/<%- dish._id%>">GO BACK</a></p>
-</div>
 
-<%- include('partials/footer') %></div>
+</div>
+<%- include('partials/footer') %>
+</div>
