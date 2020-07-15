@@ -1,46 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/header') %>
+    <link  rel="stylesheet" href="/css/style.css">
+</head>    
+<body style="background-color: #9ceeff;background-image: linear-gradient(19deg, #9ceeff 0%, #db94fb 54%, #b7f1ff 100%);">     
+    <%- include('partials/navbar') %>
+  
 
-<%- include('partials/header') %>
+<div id="show" class="container" style="width: 65%;">
+    <h2 id="show-title"><i class="fa fa-spoon" aria-hidden="true"></i> <%= dish.name %> <i class="fa fa-spoon" aria-hidden="true"></i></h2>
+    <br>
+    <img src="<%= dish.image%>" alt="Dish looks like this!">
+    <div class="tiles">
+        <div class="sub-tile">Time <i class="fa fa-clock-o" aria-hidden="true"></i> <%= dish.duration%> mins</div>
+        <div class="sub-tile">Serves<i class="fa fa-users" aria-hidden="true"></i><%=dish.serves%> people</div>
+        <div class="sub-tile"><%= dish.veg%>
+        <% if(dish.veg == 'Non-veg'){ %>    
+            <i class="fa fa-circle-nonveg" aria-hidden="true"></i></div>
+        <%}else if(dish.veg == 'Veg'){%>
+            <i class="fa fa-circle-veg" aria-hidden="true"></i></div>
+        <%}else{%>
+            <i class="fa fa-circle" aria-hidden="true"></i></div>
+        <%}%>
+        <div class="sub-tile">Cruisine<i class="fa fa-globe" aria-hidden="true"></i><%=dish.cruisine%></div>
+    </div>
+    <p id="desc"><%= dish.desc%><br></p>
+        <p style="color: red; font-family: 'Leckerli One', cursive; font-size: x-large;"><i class="fa fa-coffee" aria-hidden="true"></i> Ingredients </p>
+        <p style="white-space: pre-line;"><%= dish.ingred%></p>
+        <p style="color: red; font-family: 'Leckerli One', cursive; font-size: x-large;"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Recipe</p>
+        <p style="white-space: pre-line;"><%= dish.recipe%></p>
+        <br/>
 
-<h1>Show templ</h1>
-<h2><%= dish.name%></h2><br>
-<img src="<%= dish.image%>" alt="">
-<br>
-<%= dish.desc%>
-<p>
-<%=dish.author.username%>
-</p>
-<%if(currentUser && dish.author.id.equals(currentUser._id)){%>
-
-<!-- <button href="/dishes/<%-dish._id%>/edit"> Edit</button> -->
-<form action="/dishes/<%-dish._id%>/edit" method="GET">
-    <button>Edit</button>
-</form>
-
-<form action="/dishes/<%-dish._id%>?_method=DELETE" method="post">
-    <button>Delete</button>
-</form>
-<%}%>
-<p>
-    <form action="/dishes/<%-dish._id%>/comments/new" method="GET">
-        <button>Add comment</button>
-    </form>
-</p>
-
-<% dish.comments.forEach((cmnt)=>{ %>
     
-    <strong><p><%- cmnt.author.username %> - <%- cmnt.text%></p></strong>
+    <p><span ><i class="fa fa-user" aria-hidden="true"></i> <%=dish.author.username%></span></p>
+    <%if(currentUser && dish.author.id.equals(currentUser._id)){%>
+    <form action="/dishes/<%-dish._id%>/edit" method="GET">
+        <button id="edit" type="submit" class="btn edit"><i class="fa fa-pencil" aria-hidden="true"></i> Edit my recipe</button>
+    </form>
+    <form action="/dishes/<%-dish._id%>?_method=DELETE" method="post">
+        <button type="submit" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i> Delete my recipe</button>
+    </form>
+    <%}%>
     
-
-    <% if(currentUser && cmnt.author.code.equals(currentUser.id)){ %> 
-
-    <!-- <a href="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>/edit">Edit</a> -->
-    <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>/edit" method="GET">
-        <button type="submit">Edit</button>
+    <form id="add-cmnt" action="/dishes/<%= dish._id%>/comments" method="POST">
+        <input class=" my-3" type="text"name="comment[text]"placeholder="Add a new comment..."  style="float: inline-end;"  required>
+        <button class="btn-add"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </form>
-    <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>?_method=DELETE" method="POST">
-        <button type="submit">delete</button>
-    </form>
-    <%}%>    <p>
-        <a href="/dishes/<%-dish._id%>/comments/new"> Add new Comment </a>
-    </p>     
- <%})%>
+
+    <% dish.comments.forEach((cmnt)=>{ %> 
+        <div id="comment">   
+            <span><i class="fa fa-user-circle-o" aria-hidden="true"></i> <%- cmnt.author.username %></span>
+            <p>
+                <i class="fa fa-comment" aria-hidden="true"></i><strong><%- cmnt.text%></strong>
+            </p>
+            
+            <% if(currentUser && cmnt.author.code.equals(currentUser.id)){ %> 
+            <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>/edit" method="GET">
+                <button class="btn-warning" id="edit" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+            </form>
+            <form action="/dishes/<%=dish._id%>/comments/<%=cmnt._id%>?_method=DELETE" method="POST">
+                <button class="btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </form>
+
+            <%}%> 
+        </div>      
+                
+    <%})%>
+</div>
+</body>
+ 

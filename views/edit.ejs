@@ -1,6 +1,4 @@
-<h1>Edit form</h1>
-<%- include('partials/header') %>
-<div class="container ">
+<!-- <div class="container ">
 <h1>Edit dish</h1>
     <form action="/dishes/<%=dish._id%>?_method=PUT" method="POST" style="width: 40%;">
         <div class="form-group">
@@ -14,6 +12,53 @@
 <p>
     <a href="/dishes">GO BACK</a>
 </p>
-</div>
+</div> -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<%- include('partials/header') %>
+<link  rel="stylesheet" href="/css/style.css">
+<%- include('partials/navbar') %>
 
-<%- include('partials/footer') %>
+</head>    
+<body style="background-color: rgba(127, 255, 212, 0.205);"> 
+    <form action="/dishes/<%=dish._id%>?_method=PUT" method="POST">     
+
+<div class="container" id="editForm" style="width: 60%; padding: 0 0;">    
+    <div style=" width:100%; margin-top:0.5vh;"><a class="btn" href="/dishes">Go Back</a></div>  
+    <div id="hat3"><img src="/images/blue.jpg" alt=""></div>
+    <!-- <div id="newForm"> -->
+        <div class="form-group"><input class="form-control my-3" type="text " name="dish[name]" value="<%= dish.name %>"  required ></div>
+        <div class="form-group"><input class="form-control my-3" type="text " name="dish[image]" value="<%= dish.image %>" required ></div>
+        <div class="form-group"><input class="form-control my-3" type="number" min="1" name="dish[duration]" value="<%= dish.duration %>" required ></div>
+        <div class="form-group"><input class="form-control my-3" type="number" min="1" name="dish[serves]" value="<%= dish.serves %>" required></div>
+        <div class="form-group">
+            <label for="cruis">Cruisine</label>
+            <select name="dish[cruisine]" id="cruis" value="<%= dish.cruisine%>">
+                <option value="Indian">Indian</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Desert">Desert</option>
+                <option value="Italian">Italian</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control my-3"id="vegan" type="radio" name="dish[veg]" value="Vegan">
+            <label for="vegan">Vegan</label>
+            <input class="form-control my-3" id="veg" type="radio" name="dish[veg]" value="Veg" >
+            <label for="veg">Veg</label>
+            <input class="form-control my-3" id="non-veg" type="radio" name="dish[veg]" value="Non-veg">
+            <label for="non-veg">Non-Veg</label>
+        </div>
+        <div class="form-group "><input class="form-control my-3" type="text " name="dish[desc]" value="<%= dish.desc%>" required></div>
+    <!-- </div>      -->
+    
+    <textarea class="form-control" rows="7" name="dish[ingred]" id="ingred" placeholder="Add magic ingredients each on one line.." required><%= dish.ingred%></textarea>
+    <textarea class="form-control" rows="7" type="textarea" name="dish[recipe]" id="recipe" placeholder="Add magic ingredients each on one line.." required><%= dish.recipe%></textarea>
+  
+    <div style=" width:100%; margin-top: 1vh;"><input type="submit" class="btn" value="Rewrite to the diaary.."></div>
+    
+    <div style="position: fixed; width:15%; right: 0; bottom: 2px;"><input type="submit" class="btn" value="Rewrite !"></div>
+
+</div>
+</form>

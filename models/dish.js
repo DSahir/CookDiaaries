@@ -1,9 +1,16 @@
 mongoose = require('mongoose')
 
 var dishSchema = new mongoose.Schema({
-    name:String,
-    image:String,
-    desc:String,
+    name:{type:String},
+    image:{type:String},
+    veg:{type:String},
+    serves:{type:Number},
+    cruisine:{type:String},
+    desc:{type:String},
+    duration:{type:Number},
+    likes:{type:Number},
+    ingred:{type:String},
+    recipe:{type:String},
     author:{
         id:{
             type:mongoose.Schema.Types.ObjectID,

@@ -1,15 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <%- include('partials/header') %>
-<div class="container ">
-<h1>Create new dish</h1>
-    <form action="/dishes" method="POST" style="width: 40%;">
-        <div class="form-group">
-            <input class="form-control my-3" type="text "name="name" placeholder="name">
-            <input class="form-control my-3" type="text "name="image" placeholder="image">
-            <input class="form-control my-3" type="text "name="desc" placeholder="Description">
-            <button class="btn btn-primary">Submit</button>
+<link  rel="stylesheet" href="/css/style.css">
+<%- include('partials/navbar') %>
 
+</head>    
+<!-- <body style="background-color: rgba(127, 255, 212, 0.205);">  -->
+<body style="background: rgb(160,255,255);
+background: linear-gradient(287deg, rgba(160,255,255,1) 0%, rgba(255,204,204,1) 33%, rgba(177,252,251,1) 100%);">
+<form  action="/dishes" method="POST">     
+
+<div class="container" id="newForm" style="width: 60%; padding: 0 0;">    
+    <div style=" width:100%; margin-top:0.5vh;"><a class="btn" href="/dishes">Go Back</a></div>  
+    <div id="hat3"><img src="/images/bg4-2.png" alt=""></div>
+    <!-- <div id="newForm"> -->
+        <div class="form-group"><input class="form-control my-3" type="text " name="name" placeholder="This recipe is called.." required ></div>
+        <div class="form-group"><input class="form-control my-3" type="text" name="image" placeholder="Looks like.." required ></div>
+        <div class="form-group"><input class="form-control my-3" type="number" min="1" name="duration" placeholder="Duration in minutes.." required ></div>
+        <div class="form-group"><input class="form-control my-3" type="number" min="1" name="serves" placeholder="Serves" required ></div>
+        <div class="form-group">
+            <label for="cruis">Cruisine</label>
+            <select name="cruisine" id="cruis">
+                <option value="Indian">Indian</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Desert">Desert</option>
+                <option value="Italian">Italian</option>
+            </select>
         </div>
-    </form>
-<p><a href="/dishes">GO BACK</a></p>
+        <div class="form-group">
+            <input class="form-control my-3"id="vegan" type="radio" name="veg" value="Vegan" selected="true">
+            <label for="vegan">Vegan</label>
+            <input class="form-control my-3" id="veg" type="radio" name="veg" value="Veg" >
+            <label for="veg">Veg</label>
+            <input class="form-control my-3" id="non-veg" type="radio" name="veg" value="Non-veg">
+            <label for="non-veg">Non-Veg</label>
+        </div>
+        <div class="form-group "><input class="form-control my-3" type="text " name="desc" placeholder="Tis special because.." required></div>
+        <textarea class="form-control" rows="7" name="ingred" id="ingred" placeholder="Add magic ingredients each on one line.." required></textarea>
+        <textarea class="form-control" rows="7" type="textarea" name="recipe" id="recipe" placeholder="Add steps to make the dish each on one line.." required></textarea>
+  
+    <div style=" width:100%; margin-top: 1vh;"><input type="submit" class="btn" value="Note in the diaary.."></div>
+    <div style="position: fixed; width:15%; right: 0; bottom: 2px;"><input type="submit" class="btn" id="alt" value="Note now!"></div>
+
 </div>
-<%- include('partials/footer') %>
+</form>

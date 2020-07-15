@@ -1,0 +1,25 @@
+
+  
+    
+<nav class="navbar navbar-expand-lg navbar-default">
+    <a class="navbar-brand" href="/">CookDiaaries</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fa fa-caret-square-o-down" aria-hidden="true"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="nav navbar-nav navbar-header">
+            <li><a class="nav-item" href="/dishes">Home</a></li>
+            <li><a class="nav-item" href="">About</a></li>
+        </ul> 
+        <ul class="nav navbar-nav navbar-right">
+        <% if(!currentUser){ %> 
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Sign Up</a></li>
+        <% } else { %>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="#">Hi, <%= currentUser.username %>!</a></li>
+        <% } %>
+        </ul>
+    </div> 
+</nav>

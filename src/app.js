@@ -7,7 +7,7 @@ var express         = require('express'),
     app              = express(),
     bodyParser       =require('body-parser'),
     mongoose         = require('mongoose'),
-    Dish             = require('../models/dish.js'),
+    Dish             = require('../models/dish'),
     Comments         = require('../models/comments'),
     Posts            = require('../models/dish.js'),
     seeddb           = require('./seeds.js'),
@@ -16,10 +16,11 @@ var express         = require('express'),
     User            =require('../models/users'),
     methodoverride  =require('method-override'),
     path            =require('path'),
-    mustacheExpress =require('mustache-express')
+    mustacheExpress =require('mustache-express'),
+    exressSession   =require('express-session')
 
 // mongoose.connect(process.env.MONGO_URL)
-mongoose.connect("mongodb://127.0.0.1:27017/cookDiairies-api",{ useNewUrlParser: true , useUnifiedTopology: true  })
+mongoose.connect("mongodb://127.0.0.1:27017/cookDiairies-api",{ useNewUrlParser: true , useUnifiedTopology: true ,useFindAndModify:false })
 app.use(bodyParser.urlencoded({exdended:true}));
 
 app.engine('mustache',mustacheExpress());
@@ -34,9 +35,13 @@ app.set('view engine' , 'ejs');
 //PASSWORD CONFIGURATION
 app.use(require('express-session')({
    secret:"Thisisnotforyou",
-   resave:false,
-   saveUninitialized:false 
-}))
+   resave:true,
+   cookie:{
+    maxAge: 8*60*60*1000
+   },
+   saveUninitialized:true
+//    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodoverride('_method'))
@@ -104,11 +109,7 @@ function checkCommentOwnership(req,res, next){
 //     }
 // })
 
-var dishes = [
-    {name: "Noodles" , image:"https://images.unsplash.com/photo-1481931098730-318b6f776db0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"},
-    {name: "Pizza" , image:"https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"},
-    {name: "Pancakes" , image:"https://images.unsplash.com/photo-1506084868230-bb9d95c24759?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
-]
+
 app.get('/' , (req, res)=>{
     res.render('landing')
 });
@@ -120,32 +121,40 @@ app.get('/dishes',(req,res)=>{
         }else{
             res.render('dishes' ,{dishes:dbdish , currentUser:req.user})
     }})
-     
     })
     
-
 app.post('/dishes',isLoggedin,(req,res)=>{
     // res.send('this isa post req')
     var name = req.body.name;
     var image = req.body.image;
-    var desc = req.body.desc;
+    var desc = req.body.desc,
+        veg=req.body.veg,
+        serves=req.body.serves,
+        duration=req.body.duration,
+        cruisine=req.body.cruisine,
+        likes=req.body.likes,
+        recipe=req.body.recipe,
+        ingred=req.body.ingred;
+
+
+
     var author={
         id:req.user._id,
         username:req.user.username
     }
-    var newDish = {name:name , image:image , desc:desc , author:author}
+    var newDish = {name:name , image:image , desc:desc , author:author , veg:veg,serves:serves ,cruisine:cruisine ,duration:duration , likes:likes,ingred:ingred,recipe:recipe}
     Dish.create(newDish , (err , elt)=>{
         if(err){
             console.log(err)
-        }
-        res.redirect('/dishes') //GET by def 
+        }res.redirect('/dishes') //GET by def 
     })
     
 })
 
-app.get('/dishes/new' , (req,res)=>{
+app.get('/dishes/new' ,isLoggedin,(req,res)=>{
     res.render('new')
 })
+
 app.get('/dishes/:id' ,isLoggedin,(req,res)=>{
 Dish.findById(req.params.id).populate('comments').exec( (er , found)=>{
     if(er){
@@ -163,9 +172,9 @@ app.get('/dishes/:id/edit',checkOwnership,(req,res)=>{
    
 })
 })
-app.put('/dishes/:id' , checkOwnership,(req,res)=>{
-
-    Dish.findByIdAndUpdate(req.params.id , req.body.dish ,(err , upDish)=>{
+app.put('/dishes/:id' , checkOwnership, (req,res)=>{
+    
+    Dish.findByIdAndUpdate(req.params.id ,req.body.dish,(err)=>{
         if(err){
             res.redirect('/dishes')
         }else{
@@ -184,15 +193,15 @@ app.delete('/dishes/:id' ,checkOwnership, (req,res)=>{
     })
 })
 
-app.get('/dishes/:id/comments/new',isLoggedin,(req,res)=>{
-    Dish.findById(req.params.id,(err , dish)=>{
-        if(err){console.log(err)}
-        else{
-            res.render('new-comment' , {dish:dish})
-        }
-    })
+// app.get('/dishes/:id/comments/new',isLoggedin,(req,res)=>{
+//     Dish.findById(req.params.id,(err , dish)=>{
+//         if(err){console.log(err)}
+//         else{
+//             res.render('new-comment' , {dish:dish})
+//         }
+//     })
     
-})
+// })
 app.post('/dishes/:id/comments', isLoggedin, (req,res)=>{
     Dish.findById(req.params.id,(err , dish)=>{
         if(err){console.log(err);redirect('/dishes')}
@@ -250,7 +259,8 @@ app.get('/register' , function(req,res){
     res.render('register')
 })
 app.post('/register',(req,res)=>{
-    var newUser = new User({username:req.body.username});
+    // var newUser = new User({username:req.body.username});
+    var newUser = new User({email:req.body.email , username:req.body.username , number:req.body.number});
     User.register( newUser, req.body.password , (err , user)=>{
         if(err){console.log(err);return res.render('register')}
         else{
@@ -286,36 +296,3 @@ function isLoggedin(req,res,next){
 app.listen(3000 || process.env.PORT , ()=>{
     console.log('Serving Now..')
 })
-
-// https://freesvg.org/img/1539959543.png?w=150&h=150&fit=fill
-//https://freesvg.org/img/1580893542chef-hat-freesvg.org.png?w=150&h=150&fit=fill
-//https://freesvg.org/img/Kitchen-Utensils-Crockery-Wallpaper.png?w=150&h=150&fit=fill
-
-
-// snail-paced soft pink
-// #FDB0C0
-// unsealed mahogany
-// #4A0100
-// lousy watermelon
-// #FD4659
-
-// farraginous nice blue
-// #107AB0
-// scrubby pale rose
-// #FDC1C5
-// jerking grapefruit
-// #FD5956
-
-// rubescent straw
-// #FCF679
-// inventible bright cyan
-// #41FDFE
-// contending pink
-// #FF81C0
-
-// annihilated light pink
-// #FFD1DF
-// blurry brown red
-// #922B05
-// aphyllous light salmon
-// #FEA993

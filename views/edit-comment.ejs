@@ -1,16 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <%- include('partials/header') %>
 
-<div class="container ">
-<h1>Edit comment</h1>
-    <form action="/dishes/<%= dish_id%>/comments/<%= cmnt._id%>?_method=PUT" method="POST" style="width: 40%;">
+<link  rel="stylesheet" href="/css/style.css">
+</head>    
+<body style="background-color: #ffeba3;
+background-image: linear-gradient(270deg, #ffeba3 0%, #f7b18a 50%, #ffcdcd 100%);
+">     
+<%- include('partials/navbar') %>
+<div id="edit-cmnt" class="container" style="width: 45%;">
+<h3>Edit comment</h3>
+    <form action="/dishes/<%= dish_id%>/comments/<%= cmnt._id%>?_method=PUT" method="POST" >
         <div class="form-group">
-            <input class="form-control my-3" type="text "name="comment[text]"   value="<%=cmnt.text %>">
+            <input class="form-control my-3" type="text" name="comment[text]"   value="<%=cmnt.text %>" required>
             <!-- <input class="form-control my-3" type="text "name="comment[author]" value="<%=cmnt.author%>"> -->
-            <button class="btn btn-primary">Submit</button>
-
+            <button class="btn"><i class="fa fa-pencil" aria-hidden="true"></i> Edit now</button>
+            <p><a href="/dishes/<%- dish_id%>">GO BACK</a></p>
         </div>
     </form>
-<p><a href="/dishes/<%- dish_id%>">GO BACK</a></p>
+
 </div>
 
 <%- include('partials/footer') %></div>

@@ -1,8 +1,29 @@
-<h1>Sign up</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/header') %>
+</head>    
+<body >     
+<%- include('partials/navbar') %>
+<div id="register" class="container" style="width: 45%;">
+    <div id="hat2"><img src="/images/cook2.jpg" alt=""></div>
 
-<form action="/register" method="POST">
+    <form id="registerForm" action="/register" method="POST">
+        <div class="form-group"><input type="text" name="username" placeholder="Username" required></div>
+        <div class="form-group"><input type="email" name="email" placeholder="Email" required></div>
+        <div class="form-group"><input type="number" name="number" placeholder="Contact Number"  minlength="10" required></div>
+        <div class="form-group"><input type="password" name="password" placeholder="Password"></div>
+        <div><input type="submit" class="btn" value="Register"></div>
+        <div><a class="btn" href="/dishes">Enjoy reading CookDiaaries</a></div>
+    </form>
+</div>
+<%- include('partials/footer') %> 
+
+<!-- <form action="/register" method="POST">
     <input type="text" name="username" placeholder="name">
     <input type="password" name="password" placeholder="pawd">
     <button>Sign up</button>
     <a href="/dishes">Dishes</a>
-</form>
+</form> -->
+
+

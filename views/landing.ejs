@@ -1,14 +1,56 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="HTML">
 <head>
-    <%- include('partials/header') %>
-    <link  rel="stylesheet" href="css/style.css">
+<%- include('partials/header') %>
 </head>    
-<body>
-<div class="landing">
-    <img src="/images/mixkit-cupcakes-with-a-cherry-on-top-36-desktop-wallpaper.png"  width="80%" height="50%" alt="imaaaaaaaaaage">
-<p>zsxdcfvgbhnjmk,l</p>
-<a href="/dishes">dishes</a>
+<body id="BODY">     
+<%- include('partials/navbar') %>   
+<div id="landingContainer" class="container">
+ 
+    <div id="chef">
+            <div id="landing-header">
+                <img id="img-header" src="/images/johnny-automatic-bbq-tools.svg">
+                    <h1>COOK DIAARIES</h1>
+                <a href="/dishes" class="">Read More Food Diaaries..</a>
+            </div>
+            <img id="cook" src="/images/cooking.jpg" alt="">
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/images/bg1.png"  style="width:100%;">
+        </div>
+  
+        <div class="item">
+          <img src="/images/bg2.png" style="width:100%;">
+        </div>
+      
+        <div class="item">
+          <img src="/images/bg6.png"  style="width:100%;">
+        </div>
+      </div>
+    </div>
+    <div id="sidebar" style="background-image: url(/images/sea.jpg);background-size: contain;">
+        <div id="upright" class="carousel slide" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="item active">
+              <h1 class="flash">Tis an ill cook that can't lick his fingers.</h1>
+            </div>
+      
+            <div class="item">
+                <h1 class="flash">The cook brings soul to the mere recipe.</h1>
+            </div>
+          
+            <div class="item">
+                <h1 class="flash">Cooking done with care is an act of love.</h1>
+            </div>
+          </div>
+        </div>
+    </div> 
 </div>
 </body>
+ 
+<%- include('partials/footer') %>
