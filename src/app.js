@@ -20,7 +20,7 @@ var express         = require('express'),
     exressSession   =require('express-session')
 
 // mongoose.connect(process.env.MONGO_URL)
-mongoose.connect("mongodb://127.0.0.1:27017/cookDiairies-api",{ useNewUrlParser: true , useUnifiedTopology: true ,useFindAndModify:false })
+mongoose.connect(process.env.MONGO_URL,{ useNewUrlParser: true , useUnifiedTopology: true ,useFindAndModify:false })
 app.use(bodyParser.urlencoded({exdended:true}));
 
 app.engine('mustache',mustacheExpress());
@@ -293,6 +293,6 @@ function isLoggedin(req,res,next){
     }
     res.redirect('/login')
 } 
-app.listen(3000 || process.env.PORT , ()=>{
-    console.log('Serving Now..')
+app.listen(process.env.PORT , ()=>{
+    console.log('Serving Now.. ')
 })

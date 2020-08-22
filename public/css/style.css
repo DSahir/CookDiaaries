@@ -216,7 +216,7 @@
   /* border-top-left-radius: 30px; */
   width: 100%;
 }
-}
+
 .col-md-4:nth-of-type(odd) {
     background-color: pink;
 }
@@ -315,7 +315,7 @@
   border-width: 3px;
   border-left :3px;
   border-right: 3px;
-  font-size: 2.9vw;
+  /* font-size: 2.9vw; */
   padding: 0.4em;
   color:#392962;
   /* color: #3facd3; */
@@ -356,7 +356,7 @@
   border-width: 3px;
   border-left :3px;
   border-right: 3px;
-  font-size: 2.9vw;
+  /* font-size: 2.9vw; */
   padding: 0.3em;
   color: #feb680;
   margin-bottom: 14px;
@@ -430,13 +430,13 @@
 #newForm textarea{
   margin-bottom: 2vh;
   background-color: rgb(255, 235, 219);
-  font-size: 2vw;
+  font-size: 1.2vw;
   color: red;
 }
 #editForm textarea{
   margin-bottom: 2vh;
   background-color:rgba(56, 164, 183, 0.247);
-  font-size: 2vw;  
+  font-size: 1.2vw;  
   color: rgb(56, 164, 183);
 }
 #editForm>.form-group>input {
@@ -489,7 +489,7 @@ input[type="radio"]{
   text-align: left;
   padding-left: 1vw;
   float: left;
-  font-size: 2.5vw;
+  font-size: 1.8vw;
 }
 #editForm>.form-group >label[for="vegan"],
 #editForm>.form-group >label[for="veg"],
@@ -500,14 +500,14 @@ input[type="radio"]{
   text-align: left;
   padding-left: 1vw;
   float: left;
-  font-size: 2.5vw;
+  font-size: 1.8vw;
 }
 #newForm>div>input[type="submit"],#newForm>div>.btn{
   border-color:red;
   border-width: 3px;
   border-left :3px;
   border-right: 3px;
-  font-size: 2.9vw;
+  /* font-size: 2.9vw; */
   padding: 0.4em;
   width:100%;
   margin-bottom: 12px;
@@ -522,7 +522,7 @@ input[type="radio"]{
   border-width: 3px;
   border-left :3px;
   border-right: 3px;
-  font-size: 2.9vw;
+  /* font-size: 2.9vw; */
   padding: 0.4em;
   width:100%;
   margin-bottom: 12px;
